@@ -48,7 +48,7 @@ export function MapView({ pois }: Props) {
         maxZoom={20}
       />
       {pois.map(poi => {
-        const markerColor = '#1a6b4a'
+        const markerColor = (poi.tags ?? []).length === 0 ? '#000000' : '#1a6b4a'
 
         return (
           <Marker
