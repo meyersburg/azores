@@ -3,6 +3,7 @@ import { MapView } from './components/MapView'
 import { FilterBar } from './components/FilterBar'
 import { AdminPanel } from './components/AdminPanel'
 import { usePois } from './hooks/usePois'
+import { TAG_ORDER } from './types'
 import 'leaflet/dist/leaflet.css'
 
 export default function App() {
@@ -13,7 +14,14 @@ export default function App() {
   const allTags = useMemo(() => {
     const set = new Set<string>()
     pois.forEach(p => (p.tags ?? []).forEach(t => set.add(t)))
-    return Array.from(set).sort()
+    return Array.from(set).sort((a, b) => {
+      const ai = TAG_ORDER.indexOf(a)
+      const bi = TAG_ORDER.indexOf(b)
+      if (ai === -1 && bi === -1) return a.localeCompare(b)
+      if (ai === -1) return 1
+      if (bi === -1) return -1
+      return ai - bi
+    })
   }, [pois])
 
   const filteredPois = useMemo(() => {

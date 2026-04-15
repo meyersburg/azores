@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Poi } from '../types'
-import { TAG_COLORS, tagColor } from '../types'
+import { TAG_ORDER, tagColor } from '../types'
 
-const PRESET_TAGS = Object.keys(TAG_COLORS)
+const PRESET_TAGS = TAG_ORDER
 
 function slugify(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
