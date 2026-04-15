@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import type { Poi } from '../types'
@@ -28,30 +29,39 @@ function makeIcon(color: string) {
   })
 }
 
-// Renders the title inside Leaflet's layer system at z-index 650
+// Portals the title into the Leaflet container at z-index 650
 // (above markers at 600, below popups at 700)
 function TitleOverlay() {
   const map = useMap()
-
-  useEffect(() => {
-    const pane = map.createPane('titlePane')
-    pane.style.zIndex = '650'
-    pane.style.pointerEvents = 'none'
-
-    const el = L.DomUtil.create('div', '', pane)
+  const [container] = useState(() => {
+    const el = document.createElement('div')
     el.style.cssText = `
       position: absolute;
       top: 0; left: 0; right: 0;
-      padding: 12px 0;
+      z-index: 650;
       text-align: center;
+      padding: 12px 0;
       pointer-events: none;
     `
-    el.innerHTML = `<span style="font-family:'Instrument Serif',serif;font-size:28px;color:#000;text-shadow:0 1px 6px rgba(0,0,0,0.15);">The Azwhores</span>`
+    return el
+  })
 
-    return () => { pane.remove() }
-  }, [map])
+  useEffect(() => {
+    map.getContainer().appendChild(container)
+    return () => { container.remove() }
+  }, [map, container])
 
-  return null
+  return createPortal(
+    <span style={{
+      fontFamily: '"Instrument Serif", serif',
+      fontSize: 28,
+      color: '#000',
+      textShadow: '0 1px 6px rgba(0,0,0,0.15)',
+    }}>
+      The Azwhores
+    </span>,
+    container
+  )
 }
 
 interface Props {
