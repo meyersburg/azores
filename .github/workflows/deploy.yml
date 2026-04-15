@@ -30,6 +30,7 @@ jobs:
       - run: npm run build
         env:
           VITE_MAPTILER_KEY: ${{ secrets.VITE_MAPTILER_KEY }}
+          VITE_ADMIN_PIN: ${{ secrets.VITE_ADMIN_PIN }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
