@@ -11,11 +11,6 @@ export function FilterBar({ tags, activeTags, onToggle }: Props) {
 
   return (
     <div style={{
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      zIndex: 1000,
       padding: '10px 12px',
       background: 'rgba(255,255,255,0.92)',
       backdropFilter: 'blur(6px)',

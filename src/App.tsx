@@ -53,8 +53,8 @@ export default function App() {
 
       <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
         <MapView pois={filteredPois} />
-        <FilterBar tags={allTags} activeTags={activeTags} onToggle={toggleTag} />
       </div>
+      <FilterBar tags={allTags} activeTags={activeTags} onToggle={toggleTag} />
     </div>
   )
 }
