@@ -3,15 +3,6 @@ import { MapView } from './components/MapView'
 import type { Poi } from './types'
 import 'leaflet/dist/leaflet.css'
 
-const CATEGORY_COLORS: Record<string, string> = {
-  nature: '#1a6b4a',
-  food: '#d97706',
-  culture: '#7c3aed',
-  beach: '#0284c7',
-  accommodation: '#be123c',
-  other: '#6b7280',
-}
-
 export default function App() {
   const [pois, setPois] = useState<Poi[]>([])
 
@@ -42,10 +33,7 @@ export default function App() {
       </header>
 
       <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-        <MapView
-          pois={pois}
-          categoryColors={CATEGORY_COLORS}
-        />
+        <MapView pois={pois} />
       </div>
     </div>
   )

@@ -1,8 +1,9 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import type { Poi } from '../types'
+import { TAG_COLORS } from '../types'
+import { VoteButton } from './VoteButton'
 
-// Fix Leaflet default icon paths broken by bundlers
 delete (L.Icon.Default.prototype as any)._getIconUrl
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -28,23 +29,20 @@ function makeIcon(color: string) {
 
 function MapInit() {
   const map = useMap()
-  // Center on São Miguel island
   map.setView([37.79, -25.47], 11)
   return null
 }
 
 interface Props {
   pois: Poi[]
-  categoryColors: Record<string, string>
 }
 
-export function MapView({ pois, categoryColors }: Props) {
+export function MapView({ pois }: Props) {
   return (
     <MapContainer
       style={{ height: '100%', width: '100%' }}
       center={[37.79, -25.47]}
       zoom={11}
-      zoomControl={true}
     >
       <MapInit />
       <TileLayer
@@ -54,67 +52,62 @@ export function MapView({ pois, categoryColors }: Props) {
         zoomOffset={-1}
         maxZoom={20}
       />
-      {pois.map(poi => (
-        <Marker
-          key={poi.id}
-          position={poi.coordinates}
-          icon={makeIcon(categoryColors[poi.category] ?? '#6b7280')}
-        >
-          <Popup maxWidth={260} minWidth={200}>
-            <div style={{ fontFamily: 'system-ui, sans-serif' }}>
-              {poi.thumbnail && (
-                <img
-                  src={poi.thumbnail}
-                  alt={poi.name}
-                  style={{
-                    width: '100%',
-                    height: 120,
-                    objectFit: 'cover',
-                    borderRadius: 4,
-                    marginBottom: 8,
-                    display: 'block',
-                  }}
-                />
-              )}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                <strong style={{ fontSize: 14 }}>{poi.name}</strong>
-                <span style={{
-                  background: categoryColors[poi.category] ?? '#6b7280',
-                  color: 'white',
-                  fontSize: 10,
-                  fontWeight: 600,
-                  padding: '1px 6px',
-                  borderRadius: 10,
-                  textTransform: 'capitalize',
-                }}>
-                  {poi.category}
-                </span>
+      {pois.map(poi => {
+        const markerColor = poi.tags.length > 0
+          ? TAG_COLORS[poi.tags[0]]
+          : '#6b7280'
+
+        return (
+          <Marker
+            key={poi.id}
+            position={poi.coordinates}
+            icon={makeIcon(markerColor)}
+          >
+            <Popup maxWidth={280} minWidth={220}>
+              <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+                {poi.thumbnail && (
+                  <img
+                    src={poi.thumbnail}
+                    alt={poi.name}
+                    style={{
+                      width: '100%', height: 120, objectFit: 'cover',
+                      borderRadius: 4, marginBottom: 8, display: 'block',
+                    }}
+                  />
+                )}
+
+                <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 2 }}>{poi.name}</div>
+                <div style={{ fontSize: 12, color: '#777', marginBottom: 8 }}>{poi.town}</div>
+
+                {poi.tags.length > 0 && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>
+                    {poi.tags.map(tag => (
+                      <span key={tag} style={{
+                        background: TAG_COLORS[tag],
+                        color: 'white',
+                        fontSize: 10,
+                        fontWeight: 600,
+                        padding: '2px 8px',
+                        borderRadius: 10,
+                      }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {poi.description && (
+                  <p style={{ margin: '0 0 10px', fontSize: 12, lineHeight: 1.5, color: '#333' }}>
+                    {poi.description}
+                  </p>
+                )}
+
+                <VoteButton poiId={poi.id} />
               </div>
-              <div style={{ fontSize: 11, color: '#777', marginBottom: 6 }}>{poi.island}</div>
-              {poi.description && (
-                <p style={{ margin: '0 0 8px', fontSize: 12, lineHeight: 1.5, color: '#333' }}>
-                  {poi.description}
-                </p>
-              )}
-              {poi.tags.length > 0 && (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                  {poi.tags.map(tag => (
-                    <span key={tag} style={{
-                      background: '#f0f0f0',
-                      color: '#555',
-                      fontSize: 10,
-                      padding: '2px 6px',
-                      borderRadius: 8,
-                    }}>
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          </Popup>
-        </Marker>
-      ))}
+            </Popup>
+          </Marker>
+        )
+      })}
     </MapContainer>
   )
 }

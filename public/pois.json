@@ -2,11 +2,10 @@
   {
     "id": "home",
     "name": "Home",
-    "island": "São Miguel",
+    "town": "Lagoa",
     "coordinates": [37.746090, -25.593048],
-    "category": "accommodation",
-    "thumbnail": "",
-    "description": "Canadá das Mercês, Lagoa",
-    "tags": ["home base"]
+    "description": "Canadá das Mercês — home base for the trip.",
+    "tags": [],
+    "thumbnail": ""
   }
 ]
