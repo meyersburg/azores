@@ -48,9 +48,11 @@ export function MapView({ pois, categoryColors }: Props) {
     >
       <MapInit />
       <TileLayer
-        attribution='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
-        url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
-        maxZoom={17}
+        attribution='&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url={`https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${import.meta.env.VITE_MAPTILER_KEY}`}
+        tileSize={512}
+        zoomOffset={-1}
+        maxZoom={20}
       />
       {pois.map(poi => (
         <Marker
