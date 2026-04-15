@@ -4,8 +4,8 @@
     "name": "Home",
     "town": "Lagoa",
     "coordinates": [37.746090, -25.593048],
-    "description": "Canadá das Mercês — home base for the trip.",
-    "tags": [],
-    "thumbnail": ""
+    "description": "Canadá das Mercês",
+    "tags": ["Sleep", "Eat"],
+    "thumbnail": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=o_-txckmqnFbFTSdUp9sjQ&cb_client=search.gws-prod.gps&w=408&h=240&yaw=185.42946&pitch=0&thumbfov=100"
   }
 ]

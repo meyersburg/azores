@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import type { Poi } from '../types'
-import { TAG_COLORS } from '../types'
+import { tagColor } from '../types'
 import { VoteButton } from './VoteButton'
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
@@ -53,9 +53,7 @@ export function MapView({ pois }: Props) {
         maxZoom={20}
       />
       {pois.map(poi => {
-        const markerColor = poi.tags.length > 0
-          ? TAG_COLORS[poi.tags[0]]
-          : '#6b7280'
+        const markerColor = tagColor(poi.tags[0] ?? '')
 
         return (
           <Marker
@@ -83,7 +81,7 @@ export function MapView({ pois }: Props) {
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>
                     {poi.tags.map(tag => (
                       <span key={tag} style={{
-                        background: TAG_COLORS[tag],
+                        background: tagColor(tag),
                         color: 'white',
                         fontSize: 10,
                         fontWeight: 600,
