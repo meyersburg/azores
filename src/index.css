@@ -11,3 +11,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.leaflet-popup-pane {
+  z-index: 9999 !important;
+}
