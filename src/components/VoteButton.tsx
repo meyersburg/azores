@@ -20,7 +20,7 @@ export function VoteButton({ poiId }: Props) {
         border: 'none',
         cursor: 'pointer',
         fontSize: 14,
-        opacity: hasVoted ? 0.6 : 1,
+        opacity: 1,
         pointerEvents: 'all',
       }}
     >
