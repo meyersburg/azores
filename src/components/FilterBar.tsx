@@ -11,14 +11,17 @@ export function FilterBar({ tags, activeTags, onToggle }: Props) {
 
   return (
     <div style={{
-      padding: '10px 12px',
-      background: 'rgba(255,255,255,0.92)',
-      backdropFilter: 'blur(6px)',
-      borderTop: '1px solid #e5e7eb',
+      position: 'absolute',
+      bottom: 16,
+      left: 0,
+      right: 0,
+      zIndex: 2000,
       display: 'flex',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
       gap: 6,
-      overflowX: 'auto',
-      WebkitOverflowScrolling: 'touch',
+      padding: '0 12px',
+      pointerEvents: 'none',
     }}>
       {tags.map(tag => {
         const active = activeTags.includes(tag)
@@ -27,16 +30,18 @@ export function FilterBar({ tags, activeTags, onToggle }: Props) {
             key={tag}
             onClick={() => onToggle(tag)}
             style={{
-              flexShrink: 0,
+              pointerEvents: 'all',
               padding: '5px 12px',
               borderRadius: 14,
               border: 'none',
               cursor: 'pointer',
               fontSize: 12,
               fontWeight: 600,
-              background: active ? tagColor(tag) : '#e5e7eb',
-              color: active ? 'white' : '#555',
-              transition: 'background 0.15s, color 0.15s',
+              background: active ? tagColor(tag) : 'rgba(100,100,100,0.55)',
+              color: 'white',
+              backdropFilter: 'blur(4px)',
+              transition: 'background 0.15s',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.25)',
             }}
           >
             {tag}
