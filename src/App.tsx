@@ -47,7 +47,7 @@ export default function App() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 1000,
+        zIndex: 650,
         pointerEvents: 'none',
       }}>
         <span style={{
