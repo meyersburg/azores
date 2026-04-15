@@ -39,43 +39,24 @@ export default function App() {
     <div style={{ height: '100dvh', position: 'relative', fontFamily: 'system-ui, sans-serif' }}>
       <MapView pois={filteredPois} />
 
-      {/* Title — floats over map */}
-      <div style={{
-        position: 'absolute',
-        top: 0, left: 0, right: 0,
-        padding: '12px 16px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 650,
-        pointerEvents: 'none',
-      }}>
-        <span style={{
-          fontFamily: '"Instrument Serif", serif',
-          fontSize: 28,
-          color: '#000000',
-          textShadow: '0 1px 6px rgba(0,0,0,0.5)',
-        }}>
-          The Azwhores
-        </span>
-        <button
-          onClick={() => setAdminOpen(true)}
-          title="Manage POIs"
-          style={{
-            position: 'absolute',
-            right: 16,
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: 20,
-            padding: 4,
-            lineHeight: 1,
-            pointerEvents: 'all',
-          }}
-        >
-          ⚙️
-        </button>
-      </div>
+      {/* Gear button — always on top */}
+      <button
+        onClick={() => setAdminOpen(true)}
+        title="Manage POIs"
+        style={{
+          position: 'absolute',
+          top: 10, right: 16,
+          zIndex: 1000,
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: 20,
+          padding: 4,
+          lineHeight: 1,
+        }}
+      >
+        ⚙️
+      </button>
 
       <FilterBar tags={allTags} activeTags={activeTags} onToggle={toggleTag} />
 

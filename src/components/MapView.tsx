@@ -1,8 +1,8 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { useEffect } from 'react'
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import type { Poi } from '../types'
 import { tagColor } from '../types'
-// tagColor used in popup pills below
 import { VoteButton } from './VoteButton'
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
@@ -28,6 +28,31 @@ function makeIcon(color: string) {
   })
 }
 
+// Renders the title inside Leaflet's layer system at z-index 650
+// (above markers at 600, below popups at 700)
+function TitleOverlay() {
+  const map = useMap()
+
+  useEffect(() => {
+    const pane = map.createPane('titlePane')
+    pane.style.zIndex = '650'
+    pane.style.pointerEvents = 'none'
+
+    const el = L.DomUtil.create('div', '', pane)
+    el.style.cssText = `
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 12px 0;
+      text-align: center;
+      pointer-events: none;
+    `
+    el.innerHTML = `<span style="font-family:'Instrument Serif',serif;font-size:28px;color:#000;text-shadow:0 1px 6px rgba(0,0,0,0.15);">The Azwhores</span>`
+
+    return () => { pane.remove() }
+  }, [map])
+
+  return null
+}
 
 interface Props {
   pois: Poi[]
@@ -47,6 +72,7 @@ export function MapView({ pois }: Props) {
         zoomOffset={-1}
         maxZoom={20}
       />
+      <TitleOverlay />
       {pois.map(poi => {
         const markerColor = (poi.tags ?? []).length === 0 ? '#000000' : '#1a6b4a'
 
