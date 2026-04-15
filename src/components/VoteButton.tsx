@@ -10,8 +10,7 @@ export function VoteButton({ poiId }: Props) {
   return (
     <button
       onClick={(e) => { e.stopPropagation(); vote() }}
-      disabled={hasVoted}
-      title={hasVoted ? 'Already voted' : 'Vote for this place'}
+      title={hasVoted ? 'Click to remove vote' : 'Vote for this place'}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
@@ -19,9 +18,9 @@ export function VoteButton({ poiId }: Props) {
         padding: 0,
         background: 'none',
         border: 'none',
-        cursor: hasVoted ? 'default' : 'pointer',
+        cursor: 'pointer',
         fontSize: 14,
-        opacity: hasVoted ? 0.5 : 1,
+        opacity: hasVoted ? 0.6 : 1,
         pointerEvents: 'all',
       }}
     >

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ref, set, onValue } from 'firebase/database'
+import { ref, set, remove, onValue } from 'firebase/database'
 import { db } from '../firebase'
 
 function getDeviceId(): string {
@@ -32,8 +32,11 @@ export function useVotes(poiId: string) {
   }, [poiId, deviceId])
 
   const vote = () => {
-    if (hasVoted) return
-    set(ref(db, `votes/${poiId}/${deviceId}`), true)
+    if (hasVoted) {
+      remove(ref(db, `votes/${poiId}/${deviceId}`))
+    } else {
+      set(ref(db, `votes/${poiId}/${deviceId}`), true)
+    }
   }
 
   return { count, hasVoted, vote }
