@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { MapView } from './components/MapView'
-import { PoiDetail } from './components/PoiDetail'
 import type { Poi } from './types'
 import 'leaflet/dist/leaflet.css'
 
@@ -15,7 +14,6 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export default function App() {
   const [pois, setPois] = useState<Poi[]>([])
-  const [selected, setSelected] = useState<Poi | null>(null)
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}pois.json`)
@@ -47,17 +45,8 @@ export default function App() {
         <MapView
           pois={pois}
           categoryColors={CATEGORY_COLORS}
-          onSelectPoi={setSelected}
         />
       </div>
-
-      {selected && (
-        <PoiDetail
-          poi={selected}
-          categoryColors={CATEGORY_COLORS}
-          onClose={() => setSelected(null)}
-        />
-      )}
     </div>
   )
 }

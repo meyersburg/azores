@@ -22,65 +22,93 @@ function makeIcon(color: string) {
     className: '',
     iconSize: [28, 36],
     iconAnchor: [14, 36],
-    popupAnchor: [0, -36],
+    popupAnchor: [0, -38],
   })
 }
 
-// Centers the map on Azores archipelago
 function MapInit() {
   const map = useMap()
-  map.setView([38.5, -27.5], 7)
+  // Center on São Miguel island
+  map.setView([37.79, -25.47], 11)
   return null
 }
 
 interface Props {
   pois: Poi[]
   categoryColors: Record<string, string>
-  onSelectPoi: (poi: Poi) => void
 }
 
-export function MapView({ pois, categoryColors, onSelectPoi }: Props) {
+export function MapView({ pois, categoryColors }: Props) {
   return (
     <MapContainer
       style={{ height: '100%', width: '100%' }}
-      center={[38.5, -27.5]}
-      zoom={7}
+      center={[37.79, -25.47]}
+      zoom={11}
       zoomControl={true}
     >
       <MapInit />
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        maxZoom={19}
+        attribution='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
+        url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+        maxZoom={17}
       />
       {pois.map(poi => (
         <Marker
           key={poi.id}
           position={poi.coordinates}
           icon={makeIcon(categoryColors[poi.category] ?? '#6b7280')}
-          eventHandlers={{ click: () => onSelectPoi(poi) }}
         >
-          <Popup>
-            <div style={{ minWidth: 160 }}>
-              <strong>{poi.name}</strong>
-              <br />
-              <span style={{ fontSize: 12, color: '#555' }}>{poi.island}</span>
-              <br />
-              <button
-                onClick={() => onSelectPoi(poi)}
-                style={{
-                  marginTop: 6,
-                  padding: '4px 10px',
+          <Popup maxWidth={260} minWidth={200}>
+            <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+              {poi.thumbnail && (
+                <img
+                  src={poi.thumbnail}
+                  alt={poi.name}
+                  style={{
+                    width: '100%',
+                    height: 120,
+                    objectFit: 'cover',
+                    borderRadius: 4,
+                    marginBottom: 8,
+                    display: 'block',
+                  }}
+                />
+              )}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                <strong style={{ fontSize: 14 }}>{poi.name}</strong>
+                <span style={{
                   background: categoryColors[poi.category] ?? '#6b7280',
                   color: 'white',
-                  border: 'none',
-                  borderRadius: 4,
-                  cursor: 'pointer',
-                  fontSize: 12,
-                }}
-              >
-                View details
-              </button>
+                  fontSize: 10,
+                  fontWeight: 600,
+                  padding: '1px 6px',
+                  borderRadius: 10,
+                  textTransform: 'capitalize',
+                }}>
+                  {poi.category}
+                </span>
+              </div>
+              <div style={{ fontSize: 11, color: '#777', marginBottom: 6 }}>{poi.island}</div>
+              {poi.description && (
+                <p style={{ margin: '0 0 8px', fontSize: 12, lineHeight: 1.5, color: '#333' }}>
+                  {poi.description}
+                </p>
+              )}
+              {poi.tags.length > 0 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                  {poi.tags.map(tag => (
+                    <span key={tag} style={{
+                      background: '#f0f0f0',
+                      color: '#555',
+                      fontSize: 10,
+                      padding: '2px 6px',
+                      borderRadius: 8,
+                    }}>
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           </Popup>
         </Marker>

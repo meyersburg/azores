@@ -1,32 +1,12 @@
 [
   {
-    "id": "sete-cidades",
-    "name": "Sete Cidades",
+    "id": "home",
+    "name": "Home",
     "island": "São Miguel",
-    "coordinates": [37.8608, -25.7878],
-    "category": "nature",
-    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Sete_Cidades%2C_S%C3%A3o_Miguel%2C_Azores%2C_Portugal_%28PPL3-Altered%29_julesvernex2.jpg/320px-Sete_Cidades%2C_S%C3%A3o_Miguel%2C_Azores%2C_Portugal_%28PPL3-Altered%29_julesvernex2.jpg",
-    "description": "Twin volcanic lakes — one green, one blue — sitting inside a dramatic caldera. Best viewed from Vista do Rei overlook. Allow half a day to walk the crater rim trail.",
-    "tags": ["hiking", "viewpoint", "volcanic"]
-  },
-  {
-    "id": "furnas",
-    "name": "Furnas Valley",
-    "island": "São Miguel",
-    "coordinates": [37.7748, -25.3197],
-    "category": "nature",
-    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Furnas_geysers.jpg/320px-Furnas_geysers.jpg",
-    "description": "Active geothermal valley with bubbling fumaroles and hot springs. Try cozido das Furnas — a stew slow-cooked underground. Terra Nostra park has a warm mineral pool.",
-    "tags": ["geothermal", "food", "hot springs"]
-  },
-  {
-    "id": "pico-mountain",
-    "name": "Pico Mountain",
-    "island": "Pico",
-    "coordinates": [38.4692, -28.4022],
-    "category": "nature",
-    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Pico_mountain_with_cloud.jpg/320px-Pico_mountain_with_cloud.jpg",
-    "description": "Portugal's highest peak at 2,351m. Guided ascent takes ~5 hours up, 3 hours down. Permit required — book well in advance. Views extend to neighboring islands on clear days.",
-    "tags": ["hiking", "volcano", "permit required"]
+    "coordinates": [37.7414, -25.5622],
+    "category": "accommodation",
+    "thumbnail": "",
+    "description": "Canadá das Mercês, Lagoa",
+    "tags": ["home base"]
   }
 ]
