@@ -36,47 +36,48 @@ export default function App() {
   }
 
   return (
-    <div style={{ height: '100dvh', display: 'flex', flexDirection: 'column', fontFamily: 'system-ui, sans-serif' }}>
-      <header style={{
-        background: '#1a6b4a',
-        color: 'white',
-        padding: '10px 16px',
+    <div style={{ height: '100dvh', position: 'relative', fontFamily: 'system-ui, sans-serif' }}>
+      <MapView pois={filteredPois} />
+
+      {/* Title — floats over map */}
+      <div style={{
+        position: 'absolute',
+        top: 0, left: 0, right: 0,
+        padding: '12px 16px',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+        justifyContent: 'center',
         zIndex: 1000,
-        flexShrink: 0,
+        pointerEvents: 'none',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 22 }}>🌋</span>
-          <div>
-            <div style={{ fontWeight: 700, fontSize: 16, letterSpacing: 0.3 }}>Azores Trip</div>
-            <div style={{ fontSize: 11, opacity: 0.8 }}>{filteredPois.length} points of interest</div>
-          </div>
-        </div>
+        <span style={{
+          fontFamily: '"Instrument Serif", serif',
+          fontSize: 28,
+          color: '#ffcf40',
+          textShadow: '0 1px 6px rgba(0,0,0,0.5)',
+        }}>
+          The Azwhores
+        </span>
         <button
           onClick={() => setAdminOpen(true)}
           title="Manage POIs"
           style={{
+            position: 'absolute',
+            right: 16,
             background: 'none',
             border: 'none',
-            color: 'white',
             cursor: 'pointer',
             fontSize: 20,
-            opacity: 0.8,
             padding: 4,
             lineHeight: 1,
+            pointerEvents: 'all',
           }}
         >
           ⚙️
         </button>
-      </header>
-
-      <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-        <MapView pois={filteredPois} />
-        <FilterBar tags={allTags} activeTags={activeTags} onToggle={toggleTag} />
       </div>
+
+      <FilterBar tags={allTags} activeTags={activeTags} onToggle={toggleTag} />
 
       {adminOpen && (
         <AdminPanel
