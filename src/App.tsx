@@ -53,7 +53,7 @@ export default function App() {
         <span style={{
           fontFamily: '"Instrument Serif", serif',
           fontSize: 28,
-          color: '#ffcf40',
+          color: '#000000',
           textShadow: '0 1px 6px rgba(0,0,0,0.5)',
         }}>
           The Azwhores
