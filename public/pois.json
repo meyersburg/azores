@@ -21,9 +21,27 @@
     "id": "inferno",
     "name": "Boca do Inferno",
     "translation": "Mouth of Hell",
-    "coordinates": [37.842726, -25.763639  ],
+    "coordinates": [37.842726, -25.763639],
     "description": "Popular, easy 1–1.2 km (round trip) trail, taking roughly 20–40 minutes. It offers stunning panoramic views of the Sete Cidades volcanic lakes and is best visited early (before 9 a.m.) to avoid crowds",
     "tags": ["Hike"],
     "thumbnail": "https://futurismo.pt/wp-content/uploads/2024/02/David-Rodrigues_Sao-Miguel_Miradouro-da-boca-do-inferno_drone_DJI_0875-1024x575.jpg"
+  },
+  {
+    "id": "gorreana",
+    "name": "Plantações de Chá Gorreana",
+    "translation": "Gorreana Tea Plantation",
+    "coordinates": [37.817308, -25.402709],
+    "description": "The oldest and only industrial tea plantation in Europe. Hike through the plantation, and taste complimentary tea samples.",
+    "tags": ["Hike"],
+    "thumbnail": "https://www.jaredsdetours.com/wp-content/uploads/2023/07/gorreana-6-1024x682.jpg"
+  },
+  {
+    "id": "furnas-pico",
+    "name": "Pico de Ferro, Furnas",
+    "translation": "Iron Peak",
+    "coordinates": [37.771904, -25.334414],
+    "description": "Furna's most famous viewpoint and one of the best on the island. At 570m/1,800ft above sea level, the viewpoint offers visitors a clear view of Furnas Lake and the mountains. Make sure you visit it when entering or leaving the town through the north route.",
+    "tags": ["Vista"],
+    "thumbnail": "https://images.resosys.com/destinations/2/articles/furnas_en/inline/the-furnas-lake-in-sao-miguel-island-azores-portugal-is-a-place-to-visit-during-your-azores-vacations.jpg"
   }
 ]
