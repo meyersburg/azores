@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet'
 import L from 'leaflet'
 import type { Poi } from '../types'
 import { tagColor } from '../types'
@@ -29,10 +29,15 @@ function makeIcon(color: string) {
   })
 }
 
-// Portals the title into the Leaflet container at z-index 650
-// (above markers at 600, below popups at 700)
 function TitleOverlay() {
   const map = useMap()
+  const [visible, setVisible] = useState(true)
+
+  useMapEvents({
+    popupopen: () => setVisible(false),
+    popupclose: () => setVisible(true),
+  })
+
   const [container] = useState(() => {
     const el = document.createElement('div')
     el.style.cssText = `
@@ -42,6 +47,7 @@ function TitleOverlay() {
       text-align: center;
       padding: 12px 0;
       pointer-events: none;
+      transition: opacity 0.15s;
     `
     return el
   })
@@ -50,6 +56,10 @@ function TitleOverlay() {
     map.getContainer().appendChild(container)
     return () => { container.remove() }
   }, [map, container])
+
+  useEffect(() => {
+    container.style.opacity = visible ? '1' : '0'
+  }, [visible, container])
 
   return createPortal(
     <span style={{
