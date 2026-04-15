@@ -2,7 +2,7 @@
   {
     "id": "home",
     "name": "Home",
-    "town": "Lagoa",
+    "translation": "Lagoa",
     "coordinates": [37.746090, -25.593048],
     "description": "Canadá das Mercês",
     "tags": [],
@@ -11,7 +11,7 @@
   {
     "id": "ponte",
     "name": "Ponte Delgada",
-    "town": "Ponte Delgada",
+    "translation": "Ponte Delgada",
     "coordinates": [37.746752, -25.671291],
     "description": "Downtown Ponta Delgada",
     "tags": ["Brekkie","Lunch","Dinner"],

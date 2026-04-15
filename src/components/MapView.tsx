@@ -75,7 +75,7 @@ export function MapView({ pois }: Props) {
                 )}
 
                 <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 2 }}>{poi.name}</div>
-                <div style={{ fontSize: 12, color: '#777', marginBottom: 8 }}>{poi.town}</div>
+                <div style={{ fontSize: 12, color: '#777', marginBottom: 8 }}>{poi.translation}</div>
 
                 {poi.tags.length > 0 && (
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>

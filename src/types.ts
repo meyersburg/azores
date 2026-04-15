@@ -17,7 +17,7 @@ export function tagColor(tag: string): string {
 export interface Poi {
   id: string
   name: string
-  town: string
+  translation: string
   coordinates: [number, number]
   description: string
   tags: string[]
