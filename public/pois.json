@@ -2,7 +2,7 @@
   {
     "id": "home",
     "name": "Home",
-    "translation": "Lagoa",
+    "translation": "Street of Mercies",
     "coordinates": [37.746090, -25.593048],
     "description": "Canadá das Mercês",
     "tags": [],
@@ -11,10 +11,19 @@
   {
     "id": "ponte",
     "name": "Ponte Delgada",
-    "translation": "Ponte Delgada",
+    "translation": "Slender Tip",
     "coordinates": [37.746752, -25.671291],
     "description": "Downtown Ponta Delgada",
     "tags": ["Brekkie","Lunch","Dinner"],
     "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Ponta_Delgada_-_square_and_house.JPG"
+  },
+  {
+    "id": "inferno",
+    "name": "Boca do Inferno",
+    "translation": "Mouth of Hell",
+    "coordinates": [37.842726, -25.763639  ],
+    "description": "Popular, easy 1–1.2 km (round trip) trail, taking roughly 20–40 minutes. It offers stunning panoramic views of the Sete Cidades volcanic lakes and is best visited early (before 9 a.m.) to avoid crowds",
+    "tags": ["Hike"],
+    "thumbnail": "https://futurismo.pt/wp-content/uploads/2024/02/David-Rodrigues_Sao-Miguel_Miradouro-da-boca-do-inferno_drone_DJI_0875-1024x575.jpg"
   }
 ]
