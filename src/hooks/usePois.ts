@@ -21,7 +21,7 @@ export function usePois() {
       async (snap) => {
         const data = snap.val() as Record<string, Poi> | null
         if (data) {
-          setPois(Object.values(data))
+          setPois(Object.values(data).map(p => ({ ...p, tags: p.tags ?? [] })))
           setLoading(false)
         } else {
           // Firebase empty — try seeding from pois.json
