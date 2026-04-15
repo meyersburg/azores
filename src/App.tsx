@@ -26,7 +26,7 @@ export default function App() {
 
   const filteredPois = useMemo(() => {
     if (activeTags.length === 0) return pois
-    return pois.filter(p => (p.tags ?? []).some(t => activeTags.includes(t)))
+    return pois.filter(p => (p.tags ?? []).length === 0 || (p.tags ?? []).some(t => activeTags.includes(t)))
   }, [pois, activeTags])
 
   const toggleTag = (tag: string) => {
