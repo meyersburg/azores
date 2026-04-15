@@ -1,4 +1,4 @@
-import { tagColor, TAG_ORDER } from '../types'
+import { tagColor } from '../types'
 
 interface Props {
   tags: string[]
