@@ -5,7 +5,16 @@
     "town": "Lagoa",
     "coordinates": [37.746090, -25.593048],
     "description": "Canadá das Mercês",
-    "tags": ["Sleep", "Eat"],
+    "tags": [],
     "thumbnail": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=o_-txckmqnFbFTSdUp9sjQ&cb_client=search.gws-prod.gps&w=408&h=240&yaw=185.42946&pitch=0&thumbfov=100"
+  },
+  {
+    "id": "ponte",
+    "name": "Ponte Delgada",
+    "town": "Ponte Delgada",
+    "coordinates": [37.746752, -25.671291],
+    "description": "Downtown Ponta Delgada",
+    "tags": ["Brekkie","Lunch","Dinner"],
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Ponta_Delgada_-_square_and_house.JPG"
   }
 ]
