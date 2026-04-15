@@ -1,19 +1,14 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { MapView } from './components/MapView'
 import { FilterBar } from './components/FilterBar'
-import type { Poi } from './types'
+import { AdminPanel } from './components/AdminPanel'
+import { usePois } from './hooks/usePois'
 import 'leaflet/dist/leaflet.css'
 
 export default function App() {
-  const [pois, setPois] = useState<Poi[]>([])
+  const { pois, savePoi, deletePoi } = usePois()
   const [activeTags, setActiveTags] = useState<string[]>([])
-
-  useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}pois.json`)
-      .then(r => r.json())
-      .then(setPois)
-      .catch(console.error)
-  }, [])
+  const [adminOpen, setAdminOpen] = useState(false)
 
   const allTags = useMemo(() => {
     const set = new Set<string>()
@@ -40,21 +35,49 @@ export default function App() {
         padding: '10px 16px',
         display: 'flex',
         alignItems: 'center',
-        gap: 10,
+        justifyContent: 'space-between',
         boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
         zIndex: 1000,
+        flexShrink: 0,
       }}>
-        <span style={{ fontSize: 22 }}>🌋</span>
-        <div>
-          <div style={{ fontWeight: 700, fontSize: 16, letterSpacing: 0.3 }}>Azores Trip</div>
-          <div style={{ fontSize: 11, opacity: 0.8 }}>{filteredPois.length} points of interest</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span style={{ fontSize: 22 }}>🌋</span>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 16, letterSpacing: 0.3 }}>Azores Trip</div>
+            <div style={{ fontSize: 11, opacity: 0.8 }}>{filteredPois.length} points of interest</div>
+          </div>
         </div>
+        <button
+          onClick={() => setAdminOpen(true)}
+          title="Manage POIs"
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'white',
+            cursor: 'pointer',
+            fontSize: 20,
+            opacity: 0.8,
+            padding: 4,
+            lineHeight: 1,
+          }}
+        >
+          ⚙️
+        </button>
       </header>
 
       <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
         <MapView pois={filteredPois} />
         <FilterBar tags={allTags} activeTags={activeTags} onToggle={toggleTag} />
       </div>
+
+      {adminOpen && (
+        <AdminPanel
+          pois={pois}
+          onSave={savePoi}
+          onDelete={deletePoi}
+          onClose={() => setAdminOpen(false)}
+        />
+      )}
     </div>
   )
 }
