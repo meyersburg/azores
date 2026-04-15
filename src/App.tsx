@@ -12,13 +12,13 @@ export default function App() {
 
   const allTags = useMemo(() => {
     const set = new Set<string>()
-    pois.forEach(p => p.tags.forEach(t => set.add(t)))
+    pois.forEach(p => (p.tags ?? []).forEach(t => set.add(t)))
     return Array.from(set).sort()
   }, [pois])
 
   const filteredPois = useMemo(() => {
     if (activeTags.length === 0) return pois
-    return pois.filter(p => p.tags.some(t => activeTags.includes(t)))
+    return pois.filter(p => (p.tags ?? []).some(t => activeTags.includes(t)))
   }, [pois, activeTags])
 
   const toggleTag = (tag: string) => {
