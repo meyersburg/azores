@@ -115,7 +115,7 @@ export function PoiForm({ initial, onSave, onCancel }: Props) {
       <div style={{ marginBottom: 10 }}>
         <label style={labelStyle}>Tags</label>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-          {PRESET_TAGS.map(tag => {
+          {[...PRESET_TAGS, ...tags.filter(t => !PRESET_TAGS.includes(t))].map(tag => {
             const active = tags.includes(tag)
             return (
               <button
