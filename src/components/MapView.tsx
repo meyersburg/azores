@@ -107,7 +107,10 @@ export function MapView({ pois }: Props) {
 
       {/* Static grocery store marker */}
       <Marker position={[37.745985, -25.584970]} icon={cartIcon}>
-        <Popup><strong>Continente Modelo</strong></Popup>
+        <Popup>
+          <strong>Continente Modelo</strong><br />
+          <span style={{ fontSize: 11, color: '#777' }}>(Grocery Store)</span>
+        </Popup>
       </Marker>
 
       {pois.map(poi => {
