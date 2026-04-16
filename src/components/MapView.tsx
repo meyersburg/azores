@@ -116,7 +116,11 @@ export function MapView({ pois }: Props) {
                 )}
 
                 <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 2 }}>{poi.name}</div>
-                <div style={{ fontSize: 12, color: '#777', marginBottom: 8 }}>{poi.translation}</div>
+                {poi.translation && (
+                  <div style={{ fontSize: 12, color: '#777', marginBottom: 8 }}>
+                    <span style={{ fontWeight: 600 }}>Translation: </span>{poi.translation}
+                  </div>
+                )}
 
                 {(poi.tags ?? []).length > 0 && (
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>
