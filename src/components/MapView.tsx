@@ -13,6 +13,17 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 })
 
+const cartIcon = L.divIcon({
+  html: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+  </svg>`,
+  className: '',
+  iconSize: [22, 22],
+  iconAnchor: [11, 11],
+  popupAnchor: [0, -14],
+})
+
 function makeIcon(color: string) {
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 28 36">
@@ -93,6 +104,12 @@ export function MapView({ pois }: Props) {
         maxZoom={20}
       />
       <TitleOverlay />
+
+      {/* Static grocery store marker */}
+      <Marker position={[37.745985, -25.584970]} icon={cartIcon}>
+        <Popup><strong>Continente Modelo</strong></Popup>
+      </Marker>
+
       {pois.map(poi => {
         const markerColor = (poi.tags ?? []).length === 0 ? '#000000' : '#1a6b4a'
 
