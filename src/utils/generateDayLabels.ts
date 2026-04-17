@@ -44,7 +44,8 @@ No other text, no markdown, no explanation.`
   })
 
   if (!response.ok) {
-    throw new Error(`Anthropic API error: ${response.status} ${response.statusText}`)
+    const body = await response.text()
+    throw new Error(`Anthropic API error: ${response.status} — ${body}`)
   }
 
   const data = await response.json() as {
