@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import type { Poi } from '../types'
 import { TAG_ORDER } from '../types'
 
@@ -82,7 +83,7 @@ function Pin() {
   )
 }
 
-const TAG_ICON_MAP: Record<string, () => JSX.Element> = {
+const TAG_ICON_MAP: Record<string, () => ReactElement> = {
   'Hike':      Hike,
   'Attraction': Attraction,
   'Car Vista': CarVista,
