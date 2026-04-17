@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { Itinerary } from '../hooks/useItinerary'
 import { DAY_NAMES } from '../hooks/useItinerary'
 import type { DayWeather } from '../hooks/useWeather'
+import type { DayLabels } from '../hooks/useDayLabels'
 import type { Poi } from '../types'
 import { poiEmoji } from '../utils/poiEmoji'
 
@@ -9,7 +10,9 @@ interface Props {
   itinerary: Itinerary
   weather: DayWeather[]
   pois: Poi[]
+  labels: DayLabels
   onRemove: (dayIndex: number, poiId: string) => void
+  onGenerateLabels: () => Promise<void>
 }
 
 const PANEL_WIDTH = 185
@@ -18,10 +21,20 @@ function toF(c: number): number {
   return Math.round(c * 9 / 5 + 32)
 }
 
-export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
+export function ItineraryPanel({ itinerary, weather, pois, labels, onRemove, onGenerateLabels }: Props) {
   const [open, setOpen] = useState(false)
+  const [generating, setGenerating] = useState(false)
 
   const poiMap = Object.fromEntries(pois.map(p => [p.id, p]))
+
+  const handleGenerate = async () => {
+    setGenerating(true)
+    try {
+      await onGenerateLabels()
+    } finally {
+      setGenerating(false)
+    }
+  }
 
   return (
     <>
@@ -45,20 +58,44 @@ export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
       >
         {/* Header */}
         <div style={{
-          padding: '14px 12px 10px',
+          padding: '12px 12px 10px',
           borderBottom: '1px solid #e5e7eb',
-          fontFamily: '"Instrument Serif", serif',
-          fontSize: 24,
-          color: '#111',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
           flexShrink: 0,
         }}>
-          Itinerary
+          <span style={{
+            fontFamily: '"Instrument Serif", serif',
+            fontSize: 24,
+            color: '#111',
+          }}>
+            Itinerary
+          </span>
+          <button
+            onClick={handleGenerate}
+            disabled={generating}
+            title="Generate AI day labels"
+            style={{
+              background: 'none',
+              border: '1px solid #e5e7eb',
+              borderRadius: 6,
+              padding: '3px 7px',
+              cursor: generating ? 'default' : 'pointer',
+              fontSize: 14,
+              opacity: generating ? 0.5 : 1,
+              transition: 'opacity 0.15s',
+            }}
+          >
+            {generating ? '⏳' : '✨'}
+          </button>
         </div>
 
         {/* Day rows */}
         <div style={{ flex: 1, overflowY: 'auto' }}>
           {itinerary.map((dayPoiIds, i) => {
             const w = weather[i]
+            const label = labels[i]
             return (
               <div
                 key={i}
@@ -72,7 +109,6 @@ export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 6,
-                  marginBottom: dayPoiIds.length > 0 ? 5 : 0,
                 }}>
                   <span style={{
                     fontWeight: 700,
@@ -91,9 +127,23 @@ export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
                   )}
                 </div>
 
+                {/* AI label */}
+                {label && (
+                  <div style={{
+                    fontSize: 12,
+                    color: '#6b7280',
+                    fontStyle: 'italic',
+                    marginTop: 1,
+                    marginBottom: 4,
+                    paddingLeft: 2,
+                  }}>
+                    {label}
+                  </div>
+                )}
+
                 {/* POI chips */}
                 {dayPoiIds.length > 0 ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 3, marginTop: label ? 0 : 5 }}>
                     {dayPoiIds.map(poiId => {
                       const poi = poiMap[poiId]
                       if (!poi) return null
@@ -141,7 +191,7 @@ export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
                     })}
                   </div>
                 ) : (
-                  <div style={{ fontSize: 13, color: '#d1d5db', paddingLeft: 2 }}>
+                  <div style={{ fontSize: 13, color: '#d1d5db', paddingLeft: 2, marginTop: label ? 0 : 5 }}>
                     Nothing planned
                   </div>
                 )}

@@ -6,6 +6,8 @@ import { ItineraryPanel } from './components/ItineraryPanel'
 import { usePois } from './hooks/usePois'
 import { useItinerary } from './hooks/useItinerary'
 import { useWeather } from './hooks/useWeather'
+import { useDayLabels } from './hooks/useDayLabels'
+import { generateDayLabels } from './utils/generateDayLabels'
 import { TAG_ORDER } from './types'
 import 'leaflet/dist/leaflet.css'
 
@@ -13,6 +15,13 @@ export default function App() {
   const { pois, savePoi, deletePoi } = usePois()
   const { itinerary, addToDay, removeFromDay } = useItinerary()
   const weather = useWeather()
+  const { labels, saveLabels } = useDayLabels()
+
+  const handleGenerateLabels = async () => {
+    const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY as string
+    const newLabels = await generateDayLabels(itinerary, pois, apiKey)
+    await saveLabels(newLabels)
+  }
   const [activeTags, setActiveTags] = useState<string[]>([])
   const [adminOpen, setAdminOpen] = useState(false)
 
@@ -73,7 +82,9 @@ export default function App() {
         itinerary={itinerary}
         weather={weather}
         pois={pois}
+        labels={labels}
         onRemove={removeFromDay}
+        onGenerateLabels={handleGenerateLabels}
       />
 
       <FilterBar tags={allTags} activeTags={activeTags} onToggle={toggleTag} />
