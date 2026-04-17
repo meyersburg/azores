@@ -15,7 +15,7 @@ export function FilterBar({ tags, activeTags, onToggle }: Props) {
       bottom: 16,
       left: 0,
       right: 0,
-      zIndex: 2000,
+      zIndex: 1000,
       display: 'flex',
       justifyContent: 'center',
       flexWrap: 'wrap',

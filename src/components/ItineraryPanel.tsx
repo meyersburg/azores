@@ -4,7 +4,7 @@ import { DAY_NAMES } from '../hooks/useItinerary'
 import type { DayWeather } from '../hooks/useWeather'
 import type { DayLabels } from '../hooks/useDayLabels'
 import type { Poi } from '../types'
-import { poiEmoji } from '../utils/poiEmoji'
+import { TagIcon } from '../utils/tagIcon'
 
 interface Props {
   itinerary: Itinerary
@@ -156,7 +156,7 @@ export function ItineraryPanel({ itinerary, weather, pois, labels, onRemove, onG
                             fontSize: 14,
                           }}
                         >
-                          <span style={{ fontSize: 17, lineHeight: 1, flexShrink: 0 }}>{poiEmoji(poi)}</span>
+                          <span style={{ lineHeight: 1, flexShrink: 0, display: 'flex', alignItems: 'center' }}><TagIcon poi={poi} /></span>
                           <span style={{
                             flex: 1,
                             overflow: 'hidden',
@@ -207,15 +207,16 @@ export function ItineraryPanel({ itinerary, weather, pois, labels, onRemove, onG
             disabled={generating}
             style={{
               width: '100%',
-              background: generating ? '#f3f4f6' : '#1a6b4a',
-              color: generating ? '#9ca3af' : 'white',
-              border: 'none',
+              background: 'white',
+              color: generating ? '#9ca3af' : '#374151',
+              border: '1px solid #d1d5db',
               borderRadius: 8,
               padding: '8px 10px',
               cursor: generating ? 'default' : 'pointer',
               fontSize: 13,
-              fontWeight: 600,
-              transition: 'background 0.15s',
+              fontWeight: 400,
+              whiteSpace: 'nowrap',
+              transition: 'opacity 0.15s',
             }}
           >
             {generating ? '⏳ Generating…' : '✨ Generate day labels'}
