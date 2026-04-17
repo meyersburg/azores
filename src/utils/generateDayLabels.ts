@@ -37,7 +37,7 @@ No other text, no markdown, no explanation.`
       'anthropic-dangerous-direct-browser-access': 'true',
     },
     body: JSON.stringify({
-      model: 'claude-3-5-haiku-20241022',
+      model: 'claude-3-haiku-20240307',
       max_tokens: 256,
       messages: [{ role: 'user', content: prompt }],
     }),
