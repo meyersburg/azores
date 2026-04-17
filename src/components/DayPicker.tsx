@@ -27,7 +27,7 @@ export function DayPicker({ poiId, itinerary, weather, onAdd, onRemove }: Props)
   const [open, setOpen] = useState(false)
   const [pendingDay, setPendingDay] = useState<number | null>(null)
 
-  const daysWithThisPoi = itinerary.reduce<number[]>((acc, day, i) => {
+  const daysWithThisPoi = itinerary.reduce<number[]>((acc: number[], day: string[], i: number) => {
     if (day.includes(poiId)) acc.push(i)
     return acc
   }, [])
@@ -81,7 +81,7 @@ export function DayPicker({ poiId, itinerary, weather, onAdd, onRemove }: Props)
 
           {/* 8 day cells */}
           <div style={{ display: 'flex', gap: 2 }}>
-            {DAY_NAMES.map((name, i) => {
+            {DAY_NAMES.map((name: string, i: number) => {
               const count = itinerary[i]?.length ?? 0
               const hasThis = itinerary[i]?.includes(poiId) ?? false
               const w = weather[i]
