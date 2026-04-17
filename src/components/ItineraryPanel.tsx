@@ -12,7 +12,11 @@ interface Props {
   onRemove: (dayIndex: number, poiId: string) => void
 }
 
-const PANEL_WIDTH = 264
+const PANEL_WIDTH = 185
+
+function toF(c: number): number {
+  return Math.round(c * 9 / 5 + 32)
+}
 
 export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
   const [open, setOpen] = useState(false)
@@ -44,11 +48,11 @@ export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
           padding: '14px 12px 10px',
           borderBottom: '1px solid #e5e7eb',
           fontFamily: '"Instrument Serif", serif',
-          fontSize: 20,
+          fontSize: 24,
           color: '#111',
           flexShrink: 0,
         }}>
-          🗓 Itinerary
+          Itinerary
         </div>
 
         {/* Day rows */}
@@ -72,18 +76,18 @@ export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
                 }}>
                   <span style={{
                     fontWeight: 700,
-                    fontSize: 13,
-                    minWidth: 28,
+                    fontSize: 16,
+                    minWidth: 32,
                     color: '#1a6b4a',
                   }}>
                     {DAY_NAMES[i]}
                   </span>
                   {w ? (
-                    <span style={{ fontSize: 13 }} title={`${w.label} · ${w.tempMax}°C`}>
-                      {w.emoji} <span style={{ fontSize: 11, color: '#6b7280' }}>{w.tempMax}°</span>
+                    <span style={{ fontSize: 16 }} title={`${w.label} · ${toF(w.tempMax)}°F`}>
+                      {w.emoji} <span style={{ fontSize: 13, color: '#6b7280' }}>{toF(w.tempMax)}°</span>
                     </span>
                   ) : (
-                    <span style={{ fontSize: 13, color: '#d1d5db' }}>—</span>
+                    <span style={{ fontSize: 16, color: '#d1d5db' }}>—</span>
                   )}
                 </div>
 
@@ -103,10 +107,10 @@ export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
                             borderRadius: 6,
                             padding: '3px 4px 3px 6px',
                             gap: 5,
-                            fontSize: 12,
+                            fontSize: 14,
                           }}
                         >
-                          <span style={{ fontSize: 14, lineHeight: 1 }}>{poiEmoji(poi)}</span>
+                          <span style={{ fontSize: 17, lineHeight: 1, flexShrink: 0 }}>{poiEmoji(poi)}</span>
                           <span style={{
                             flex: 1,
                             overflow: 'hidden',
@@ -124,7 +128,7 @@ export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
                               border: 'none',
                               cursor: 'pointer',
                               color: '#9ca3af',
-                              fontSize: 15,
+                              fontSize: 17,
                               padding: '0 3px',
                               lineHeight: 1,
                               flexShrink: 0,
@@ -137,7 +141,7 @@ export function ItineraryPanel({ itinerary, weather, pois, onRemove }: Props) {
                     })}
                   </div>
                 ) : (
-                  <div style={{ fontSize: 11, color: '#d1d5db', paddingLeft: 2 }}>
+                  <div style={{ fontSize: 13, color: '#d1d5db', paddingLeft: 2 }}>
                     Nothing planned
                   </div>
                 )}

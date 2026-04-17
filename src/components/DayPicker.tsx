@@ -11,18 +11,6 @@ interface Props {
   onRemove: (dayIndex: number) => void
 }
 
-function fillColor(count: number, hasThis: boolean): string {
-  if (hasThis) return '#1a6b4a'
-  if (count === 0) return '#f3f4f6'
-  if (count === 1) return '#dcfce7'
-  if (count === 2) return '#86efac'
-  return '#4ade80'
-}
-
-function textColor(hasThis: boolean): string {
-  return hasThis ? 'white' : '#111'
-}
-
 export function DayPicker({ poiId, itinerary, weather, onAdd, onRemove }: Props) {
   const [open, setOpen] = useState(false)
   const [pendingDay, setPendingDay] = useState<number | null>(null)
@@ -38,7 +26,6 @@ export function DayPicker({ poiId, itinerary, weather, onAdd, onRemove }: Props)
       onRemove(dayIndex)
       return
     }
-    // If already on a different day, ask for confirmation
     if (daysWithThisPoi.length > 0) {
       setPendingDay(dayIndex)
       return
@@ -76,13 +63,12 @@ export function DayPicker({ poiId, itinerary, weather, onAdd, onRemove }: Props)
       ) : (
         <div onClick={e => e.stopPropagation()}>
           <div style={{ fontSize: 11, color: '#666', marginBottom: 5, fontWeight: 600 }}>
-            Tap a day to add · tap ✓ to remove:
+            Tap a day · tap ✓ to remove:
           </div>
 
           {/* 8 day cells */}
           <div style={{ display: 'flex', gap: 2 }}>
             {DAY_NAMES.map((name: string, i: number) => {
-              const count = itinerary[i]?.length ?? 0
               const hasThis = itinerary[i]?.includes(poiId) ?? false
               const w = weather[i]
               const isPending = pendingDay === i
@@ -92,8 +78,8 @@ export function DayPicker({ poiId, itinerary, weather, onAdd, onRemove }: Props)
                   onClick={() => handleCellClick(i)}
                   style={{
                     flex: 1,
-                    background: fillColor(count, hasThis),
-                    color: textColor(hasThis),
+                    background: hasThis ? '#1a6b4a' : '#f3f4f6',
+                    color: hasThis ? 'white' : '#111',
                     borderRadius: 5,
                     padding: '4px 0',
                     textAlign: 'center',
@@ -123,7 +109,7 @@ export function DayPicker({ poiId, itinerary, weather, onAdd, onRemove }: Props)
               fontSize: 11,
               color: '#92400e',
             }}>
-              ⚠️ Already on {daysWithThisPoi.map(d => DAY_NAMES[d]).join(', ')}. Add to{' '}
+              ⚠️ Already on {daysWithThisPoi.map((d: number) => DAY_NAMES[d]).join(', ')}. Add to{' '}
               <strong>{DAY_NAMES[pendingDay]}</strong> anyway?
               <div style={{ display: 'flex', gap: 5, marginTop: 5 }}>
                 <button
@@ -149,21 +135,6 @@ export function DayPicker({ poiId, itinerary, weather, onAdd, onRemove }: Props)
               </div>
             </div>
           )}
-
-          <button
-            onClick={() => { setOpen(false); setPendingDay(null) }}
-            style={{
-              marginTop: 6,
-              background: 'none',
-              border: 'none',
-              fontSize: 11,
-              color: '#9ca3af',
-              cursor: 'pointer',
-              padding: 0,
-            }}
-          >
-            ✕ Close
-          </button>
         </div>
       )}
     </div>

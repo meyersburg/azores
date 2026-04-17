@@ -121,7 +121,8 @@ export function MapView({ pois, itinerary, weather, onAddToDay, onRemoveFromDay 
       </Marker>
 
       {pois.map(poi => {
-        const markerColor = (poi.tags ?? []).length === 0 ? '#000000' : '#1a6b4a'
+        const isAssigned = itinerary.some((day: string[]) => day.includes(poi.id))
+        const markerColor = isAssigned ? '#1a6b4a' : '#9ca3af'
 
         return (
           <Marker
