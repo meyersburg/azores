@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { weatherFromCode, WeatherInfo } from '../utils/weatherEmoji'
+import { weatherFromCode } from '../utils/weatherEmoji'
+import type { WeatherInfo } from '../utils/weatherEmoji'
 
 export interface DayWeather extends WeatherInfo {
   tempMax: number
