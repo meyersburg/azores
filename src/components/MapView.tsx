@@ -5,6 +5,9 @@ import L from 'leaflet'
 import type { Poi } from '../types'
 import { tagColor } from '../types'
 import { VoteButton } from './VoteButton'
+import { DayPicker } from './DayPicker'
+import type { Itinerary } from '../hooks/useItinerary'
+import type { DayWeather } from '../hooks/useWeather'
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
 L.Icon.Default.mergeOptions({
@@ -87,9 +90,13 @@ function TitleOverlay() {
 
 interface Props {
   pois: Poi[]
+  itinerary: Itinerary
+  weather: DayWeather[]
+  onAddToDay: (dayIndex: number, poiId: string) => void
+  onRemoveFromDay: (dayIndex: number, poiId: string) => void
 }
 
-export function MapView({ pois }: Props) {
+export function MapView({ pois, itinerary, weather, onAddToDay, onRemoveFromDay }: Props) {
   return (
     <MapContainer
       style={{ height: '100%', width: '100%' }}
@@ -166,6 +173,14 @@ export function MapView({ pois }: Props) {
                 )}
 
                 <VoteButton poiId={poi.id} />
+
+                <DayPicker
+                  poiId={poi.id}
+                  itinerary={itinerary}
+                  weather={weather}
+                  onAdd={dayIndex => onAddToDay(dayIndex, poi.id)}
+                  onRemove={dayIndex => onRemoveFromDay(dayIndex, poi.id)}
+                />
               </div>
             </Popup>
           </Marker>

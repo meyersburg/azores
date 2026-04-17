@@ -2,12 +2,17 @@ import { useState, useMemo } from 'react'
 import { MapView } from './components/MapView'
 import { FilterBar } from './components/FilterBar'
 import { AdminPanel } from './components/AdminPanel'
+import { ItineraryPanel } from './components/ItineraryPanel'
 import { usePois } from './hooks/usePois'
+import { useItinerary } from './hooks/useItinerary'
+import { useWeather } from './hooks/useWeather'
 import { TAG_ORDER } from './types'
 import 'leaflet/dist/leaflet.css'
 
 export default function App() {
   const { pois, savePoi, deletePoi } = usePois()
+  const { itinerary, addToDay, removeFromDay } = useItinerary()
+  const weather = useWeather()
   const [activeTags, setActiveTags] = useState<string[]>([])
   const [adminOpen, setAdminOpen] = useState(false)
 
@@ -37,7 +42,13 @@ export default function App() {
 
   return (
     <div style={{ height: '100dvh', position: 'relative', fontFamily: 'system-ui, sans-serif' }}>
-      <MapView pois={filteredPois} />
+      <MapView
+        pois={filteredPois}
+        itinerary={itinerary}
+        weather={weather}
+        onAddToDay={addToDay}
+        onRemoveFromDay={removeFromDay}
+      />
 
       {/* Gear button — always on top */}
       <button
@@ -57,6 +68,13 @@ export default function App() {
       >
         ⚙️
       </button>
+
+      <ItineraryPanel
+        itinerary={itinerary}
+        weather={weather}
+        pois={pois}
+        onRemove={removeFromDay}
+      />
 
       <FilterBar tags={allTags} activeTags={activeTags} onToggle={toggleTag} />
 
