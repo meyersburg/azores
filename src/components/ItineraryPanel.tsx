@@ -17,10 +17,6 @@ interface Props {
 
 const PANEL_WIDTH = 185
 
-function toF(c: number): number {
-  return Math.round(c * 9 / 5 + 32)
-}
-
 export function ItineraryPanel({ itinerary, weather, pois, labels, onRemove, onGenerateLabels }: Props) {
   const [open, setOpen] = useState(false)
   const [generating, setGenerating] = useState(false)
@@ -66,9 +62,6 @@ export function ItineraryPanel({ itinerary, weather, pois, labels, onRemove, onG
         <div style={{
           padding: '12px 12px 10px',
           borderBottom: '1px solid #e5e7eb',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
           flexShrink: 0,
         }}>
           <span style={{
@@ -78,23 +71,6 @@ export function ItineraryPanel({ itinerary, weather, pois, labels, onRemove, onG
           }}>
             Itinerary
           </span>
-          <button
-            onClick={handleGenerate}
-            disabled={generating}
-            title="Generate AI day labels"
-            style={{
-              background: 'none',
-              border: '1px solid #e5e7eb',
-              borderRadius: 6,
-              padding: '3px 7px',
-              cursor: generating ? 'default' : 'pointer',
-              fontSize: 14,
-              opacity: generating ? 0.5 : 1,
-              transition: 'opacity 0.15s',
-            }}
-          >
-            {generating ? '⏳' : '✨'}
-          </button>
         </div>
 
         {/* Error banner */}
@@ -139,8 +115,8 @@ export function ItineraryPanel({ itinerary, weather, pois, labels, onRemove, onG
                     {DAY_NAMES[i]}
                   </span>
                   {w ? (
-                    <span style={{ fontSize: 16 }} title={`${w.label} · ${toF(w.tempMax)}°F`}>
-                      {w.emoji} <span style={{ fontSize: 13, color: '#6b7280' }}>{toF(w.tempMax)}°</span>
+                    <span style={{ fontSize: 13 }} title={w.label}>
+                      {w.emoji} <span style={{ color: '#6b7280' }}>{w.tempMin}°-{w.tempMax}°</span>
                     </span>
                   ) : (
                     <span style={{ fontSize: 16, color: '#d1d5db' }}>—</span>
@@ -218,6 +194,32 @@ export function ItineraryPanel({ itinerary, weather, pois, labels, onRemove, onG
               </div>
             )
           })}
+        </div>
+
+        {/* Generate labels button */}
+        <div style={{
+          padding: '10px',
+          borderTop: '1px solid #e5e7eb',
+          flexShrink: 0,
+        }}>
+          <button
+            onClick={handleGenerate}
+            disabled={generating}
+            style={{
+              width: '100%',
+              background: generating ? '#f3f4f6' : '#1a6b4a',
+              color: generating ? '#9ca3af' : 'white',
+              border: 'none',
+              borderRadius: 8,
+              padding: '8px 10px',
+              cursor: generating ? 'default' : 'pointer',
+              fontSize: 13,
+              fontWeight: 600,
+              transition: 'background 0.15s',
+            }}
+          >
+            {generating ? '⏳ Generating…' : '✨ Generate day labels'}
+          </button>
         </div>
       </div>
 
