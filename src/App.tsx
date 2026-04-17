@@ -19,6 +19,7 @@ export default function App() {
 
   const handleGenerateLabels = async () => {
     const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY as string
+    if (!apiKey) throw new Error('VITE_ANTHROPIC_API_KEY is not set')
     const newLabels = await generateDayLabels(itinerary, pois, apiKey)
     await saveLabels(newLabels)
   }

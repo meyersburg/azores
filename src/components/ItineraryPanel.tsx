@@ -24,13 +24,19 @@ function toF(c: number): number {
 export function ItineraryPanel({ itinerary, weather, pois, labels, onRemove, onGenerateLabels }: Props) {
   const [open, setOpen] = useState(false)
   const [generating, setGenerating] = useState(false)
+  const [genError, setGenError] = useState<string | null>(null)
 
   const poiMap = Object.fromEntries(pois.map(p => [p.id, p]))
 
   const handleGenerate = async () => {
     setGenerating(true)
+    setGenError(null)
     try {
       await onGenerateLabels()
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e)
+      setGenError(msg)
+      console.error('Label generation failed:', e)
     } finally {
       setGenerating(false)
     }
@@ -90,6 +96,20 @@ export function ItineraryPanel({ itinerary, weather, pois, labels, onRemove, onG
             {generating ? '⏳' : '✨'}
           </button>
         </div>
+
+        {/* Error banner */}
+        {genError && (
+          <div style={{
+            background: '#fef2f2',
+            color: '#b91c1c',
+            fontSize: 11,
+            padding: '6px 10px',
+            borderBottom: '1px solid #fecaca',
+            flexShrink: 0,
+          }}>
+            ⚠️ {genError}
+          </div>
+        )}
 
         {/* Day rows */}
         <div style={{ flex: 1, overflowY: 'auto' }}>
