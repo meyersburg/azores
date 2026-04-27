@@ -82,7 +82,7 @@ function TitleOverlay() {
       color: '#000',
       textShadow: '0 1px 6px rgba(0,0,0,0.15)',
     }}>
-      The Azwhores
+      The Azores
     </span>,
     container
   )
